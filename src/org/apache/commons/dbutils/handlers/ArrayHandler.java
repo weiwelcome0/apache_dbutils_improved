@@ -20,8 +20,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import org.apache.commons.dbutils.ResultSetHandler;
+import org.apache.commons.dbutils.RowProcessor;
 import org.apache.commons.dbutils.processors.ArrayRowProcessor;
-import org.apache.commons.dbutils.processors.RowProcessor;
 
 /**
  * <code>ResultSetHandler</code> implementation that converts a

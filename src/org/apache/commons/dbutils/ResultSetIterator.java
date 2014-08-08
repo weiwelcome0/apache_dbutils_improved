@@ -21,7 +21,6 @@ import java.sql.SQLException;
 import java.util.Iterator;
 
 import org.apache.commons.dbutils.processors.ArrayRowProcessor;
-import org.apache.commons.dbutils.processors.RowProcessor;
 
 /**
  * <p>

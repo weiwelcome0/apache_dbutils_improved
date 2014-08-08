@@ -20,8 +20,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Map;
 
+import org.apache.commons.dbutils.RowProcessor;
 import org.apache.commons.dbutils.processors.MapRowProcessor;
-import org.apache.commons.dbutils.processors.RowProcessor;
 
 /**
  * <p>

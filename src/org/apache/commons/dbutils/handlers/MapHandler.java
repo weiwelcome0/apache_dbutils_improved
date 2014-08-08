@@ -21,7 +21,7 @@ import java.sql.SQLException;
 import java.util.Map;
 
 import org.apache.commons.dbutils.ResultSetHandler;
-import org.apache.commons.dbutils.processors.RowProcessor;
+import org.apache.commons.dbutils.RowProcessor;
 
 /**
  * <code>ResultSetHandler</code> implementation that converts the first

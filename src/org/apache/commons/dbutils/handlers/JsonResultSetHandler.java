@@ -4,8 +4,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import org.apache.commons.dbutils.ResultSetHandler;
+import org.apache.commons.dbutils.RowProcessor;
 import org.apache.commons.dbutils.processors.JsonRowProcessor;
-import org.apache.commons.dbutils.processors.RowProcessor;
 
 
 

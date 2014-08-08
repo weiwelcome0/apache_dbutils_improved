@@ -4,6 +4,8 @@ import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 
+import org.apache.commons.dbutils.RowProcessor;
+
 
 public class ArrayRowProcessor implements RowProcessor<Object[]> {
 

@@ -6,6 +6,8 @@ import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.apache.commons.dbutils.RowProcessor;
+
 
 public class MapRowProcessor implements RowProcessor<Map<String, Object>> {
 

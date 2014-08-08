@@ -3,6 +3,8 @@ package org.apache.commons.dbutils.processors;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import org.apache.commons.dbutils.RowProcessor;
+
 
 public class CSVRowProcessor implements RowProcessor<CharSequence> {
 

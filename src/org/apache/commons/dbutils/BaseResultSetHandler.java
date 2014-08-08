@@ -204,38 +204,12 @@ public abstract class BaseResultSetHandler<T> implements ResultSetHandler<T> {
 
     /**
      * @param columnIndex
-     * @param scale
-     * @return
-     * @throws SQLException
-     * @deprecated
-     * @see java.sql.ResultSet#getBigDecimal(int, int)
-     */
-    @Deprecated
-    protected final BigDecimal getBigDecimal(int columnIndex, int scale) throws SQLException {
-        return rs.getBigDecimal(columnIndex, scale);
-    }
-
-    /**
-     * @param columnIndex
      * @return
      * @throws SQLException
      * @see java.sql.ResultSet#getBigDecimal(int)
      */
     protected final BigDecimal getBigDecimal(int columnIndex) throws SQLException {
         return rs.getBigDecimal(columnIndex);
-    }
-
-    /**
-     * @param columnLabel
-     * @param scale
-     * @return
-     * @throws SQLException
-     * @deprecated
-     * @see java.sql.ResultSet#getBigDecimal(java.lang.String, int)
-     */
-    @Deprecated
-    protected final BigDecimal getBigDecimal(String columnLabel, int scale) throws SQLException {
-        return rs.getBigDecimal(columnLabel, scale);
     }
 
     /**
@@ -895,30 +869,6 @@ public abstract class BaseResultSetHandler<T> implements ResultSetHandler<T> {
      */
     protected final URL getURL(String columnLabel) throws SQLException {
         return rs.getURL(columnLabel);
-    }
-
-    /**
-     * @param columnIndex
-     * @return
-     * @throws SQLException
-     * @deprecated
-     * @see java.sql.ResultSet#getUnicodeStream(int)
-     */
-    @Deprecated
-    protected final InputStream getUnicodeStream(int columnIndex) throws SQLException {
-        return rs.getUnicodeStream(columnIndex);
-    }
-
-    /**
-     * @param columnLabel
-     * @return
-     * @throws SQLException
-     * @deprecated
-     * @see java.sql.ResultSet#getUnicodeStream(java.lang.String)
-     */
-    @Deprecated
-    protected final InputStream getUnicodeStream(String columnLabel) throws SQLException {
-        return rs.getUnicodeStream(columnLabel);
     }
 
     /**

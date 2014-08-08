@@ -24,8 +24,6 @@ import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Future;
 
-import javax.sql.DataSource;
-
 /**
  * Executes SQL queries with pluggable strategies for handling
  * <code>ResultSet</code>s.  This class is thread safe.
@@ -50,120 +48,8 @@ public class AsyncQueryRunner extends AbstractQueryRunner {
         this.queryRunner = queryRunner;
     }
 
-    /**
-     * Constructor for AsyncQueryRunner.
-     *
-     * @param executorService the {@code ExecutorService} instance used to run JDBC invocations concurrently.
-     */
-    public AsyncQueryRunner(ExecutorService executorService) {
-        this(null, false, executorService);
-    }
 
-    /**
-     * @deprecated Use {@link #AsyncQueryRunner(ExecutorService, QueryRunner)} instead.
-     * Constructor for AsyncQueryRunner that controls the use of <code>ParameterMetaData</code>.
-     *
-     * @param pmdKnownBroken Some drivers don't support {@link java.sql.ParameterMetaData#getParameterType(int) };
-     * if <code>pmdKnownBroken</code> is set to true, we won't even try it; if false, we'll try it,
-     * and if it breaks, we'll remember not to use it again.
-     * @param executorService the {@code ExecutorService} instance used to run JDBC invocations concurrently.
-     */
-    @Deprecated
-    public AsyncQueryRunner(boolean pmdKnownBroken, ExecutorService executorService) {
-        this(null, pmdKnownBroken, executorService);
-    }
-
-    /**
-     * @deprecated Use {@link #AsyncQueryRunner(ExecutorService, QueryRunner)} instead.
-     * Constructor for AsyncQueryRunner that takes a <code>DataSource</code>.
-     *
-     * Methods that do not take a <code>Connection</code> parameter will retrieve connections from this
-     * <code>DataSource</code>.
-     *
-     * @param ds The <code>DataSource</code> to retrieve connections from.
-     * @param executorService the {@code ExecutorService} instance used to run JDBC invocations concurrently.
-     */
-    @Deprecated
-    public AsyncQueryRunner(DataSource ds, ExecutorService executorService) {
-        this(ds, false, executorService);
-    }
-
-    /**
-     * @deprecated Use {@link #AsyncQueryRunner(ExecutorService, QueryRunner)} instead.
-     * Constructor for AsyncQueryRunner that take a <code>DataSource</code> and controls the use of <code>ParameterMetaData</code>.
-     * Methods that do not take a <code>Connection</code> parameter will retrieve connections from this
-     * <code>DataSource</code>.
-     *
-     * @param ds The <code>DataSource</code> to retrieve connections from.
-     * @param pmdKnownBroken Some drivers don't support {@link java.sql.ParameterMetaData#getParameterType(int) };
-     * if <code>pmdKnownBroken</code> is set to true, we won't even try it; if false, we'll try it,
-     * and if it breaks, we'll remember not to use it again.
-     * @param executorService the {@code ExecutorService} instance used to run JDBC invocations concurrently.
-     */
-    @Deprecated
-    public AsyncQueryRunner(DataSource ds, boolean pmdKnownBroken, ExecutorService executorService) {
-        super(ds, pmdKnownBroken);
-        this.executorService = executorService;
-        this.queryRunner = new QueryRunner(ds, pmdKnownBroken);
-    }
-
-    /**
-     * @deprecated No longer used by this class. Will be removed in a future version.
-     * Class that encapsulates the continuation for batch calls.
-     */
-    @Deprecated
-    protected class BatchCallableStatement implements Callable<int[]> {
-        private final String sql;
-        private final Object[][] params;
-        private final Connection conn;
-        private final boolean closeConn;
-        private final PreparedStatement ps;
-
-        /**
-         * Creates a new BatchCallableStatement instance.
-         *
-         * @param sql The SQL statement to execute.
-         * @param params An array of query replacement parameters.  Each row in
-         *        this array is one set of batch replacement values.
-         * @param conn The connection to use for the batch call.
-         * @param closeConn True if the connection should be closed, false otherwise.
-         * @param ps The {@link PreparedStatement} to be executed.
-         */
-        public BatchCallableStatement(String sql, Object[][] params, Connection conn, boolean closeConn, PreparedStatement ps) {
-            this.sql = sql;
-            this.params = params.clone();
-            this.conn = conn;
-            this.closeConn = closeConn;
-            this.ps = ps;
-        }
-
-        /**
-         * The actual call to executeBatch.
-         *
-         * @return an array of update counts containing one element for each command in the batch.
-         * @throws SQLException if a database access error occurs or one of the commands sent to the database fails.
-         * @see PreparedStatement#executeBatch()
-         */
-        @Override
-        public int[] call() throws SQLException {
-            int[] ret = null;
-
-            try {
-                ret = ps.executeBatch();
-            } catch (SQLException e) {
-                rethrow(e, sql, (Object[])params);
-            } finally {
-                close(ps);
-                if (closeConn) {
-                    close(conn);
-                }
-            }
-
-            return ret;
-        }
-    }
-
-    /**
+     /**
      * Execute a batch of SQL INSERT, UPDATE, or DELETE queries.
      *
      * @param conn The <code>Connection</code> to use to run the query.  The caller is

@@ -23,10 +23,10 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.dbutils.ResultSetHandler;
+import org.apache.commons.dbutils.RowProcessor;
 import org.apache.commons.dbutils.processors.ArrayRowProcessor;
 import org.apache.commons.dbutils.processors.BeanRowProcessor;
 import org.apache.commons.dbutils.processors.MapRowProcessor;
-import org.apache.commons.dbutils.processors.RowProcessor;
 
 
 /**
