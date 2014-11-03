@@ -25,12 +25,11 @@ import java.util.Map;
 import org.apache.commons.dbutils.ResultSetHandler;
 import org.apache.commons.dbutils.RowProcessor;
 import org.apache.commons.dbutils.processors.ArrayRowProcessor;
-import org.apache.commons.dbutils.processors.BeanRowProcessor;
 import org.apache.commons.dbutils.processors.MapRowProcessor;
 
 
 /**
- * Abstract class that simplify development of <code>ResultSetHandler</code>
+ * Base class that simplify development of <code>ResultSetHandler</code>
  * classes that convert <code>ResultSet</code> into <code>List</code>.
  *
  * @param <T> the target List generic type
@@ -38,20 +37,15 @@ import org.apache.commons.dbutils.processors.MapRowProcessor;
  */
 public class ListHandler<T> implements ResultSetHandler<List<T>> {
 	
-	private static final ResultSetHandler<List<Object[]>> arrayListHandler = new ListHandler<Object[]>(ArrayRowProcessor.ROW_PROCESSOR);
-	private static final ResultSetHandler<List<Map<String, Object>>> mapListHandler = new ListHandler<Map<String, Object>>(MapRowProcessor.ROW_PROCESSOR);
+	/**
+	 * arrayListHandler : to get the ResultSetHandler of List<Object[]>
+	 * mapListHandler : to get the ResultSetHandler of Map<String, Object>
+	 * if want to get the ResultSetHandler of JavaBean, use "new ListHandler<T>(new BeanRowProcessor<T>(type))";
+	 */	
 	
-	public static ResultSetHandler<List<Object[]>> arrayListHandler(){
-		return arrayListHandler;
-	}
+	public static final ResultSetHandler<List<Object[]>> ARRAYLIST_HANDLER = new ListHandler<Object[]>(ArrayRowProcessor.ROW_PROCESSOR);
+	public static final ResultSetHandler<List<Map<String, Object>>> MAPLIST_HANDLER = new ListHandler<Map<String, Object>>(MapRowProcessor.ROW_PROCESSOR);
 	
-	public static ResultSetHandler<List<Map<String, Object>>> MapListHandler(){
-		return mapListHandler;
-	}
-	
-	public static <T> ResultSetHandler<List<T>> beanListHandler(Class<T> type){
-		return new ListHandler<T>(new BeanRowProcessor<T>(type));
-	}
 	
 	/**
      * The RowProcessor implementation to use when converting rows
